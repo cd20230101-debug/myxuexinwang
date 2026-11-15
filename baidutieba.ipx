@@ -1,0 +1,27 @@
+#!name=百度贴吧去广告(已取消VIP屏蔽)
+#!desc=移除开屏广告、信息流广告和帖内广告，精简侧拉抽屉及我的页面；【修改版：保留VIP会员信息、不再抹除会员标识】
+#!author=可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md], app2smile[https://github.com/app2smile]
+#!icon=https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Tieba.png
+#!category=iKeLee
+#!tag=去广告
+#!loon_version=3.2.4(787)
+#!homepage=https://hub.kelee.one
+#!date=2026-05-20
+
+[MitM]
+hostname = tiebac.baidu.com, tieba.baidu.com
+
+[http-response-jq]
+^https?://tiebac\.baidu\.com/c/s/sync$ 'delpaths([["advertisement_config"]])'
+^https?://tiebac\.baidu\.com/c/s/sync$ 'delpaths([["video_report_config"]])'
+^https?://tiebac\.baidu\.com/c/s/sync$ 'delpaths([["next_start"]])'
+^https?://tiebac\.baidu\.com/c/s/sync$ 'delpaths([["feed_ad_list"]])'
+^https?://tiebac\.baidu\.com/c/s/sync$ 'delpaths([["ad_list"]])'
+^https?://tiebac\.baidu\.com/c/s/sync$ 'delpaths([["pop_ad"]])'
+^https?://tiebac\.baidu\.com/c/s/sync$ 'delpaths([["banner_ad"]])'
+# 下面这两行是原版屏蔽VIP会员的规则，已经注释禁用
+#^https?://tiebac\.baidu\.com/c/s/sync$ 'delpaths([["vip"]])'
+#^https?://tiebac\.baidu\.com/c/s/sync$ 'delpaths([["member_info"]])'
+
+[Script]
+贴吧页面精简 = type=http-response, pattern=^https?://tieba\.baidu\.com, script-path=https://kelee.one/Resource/JavaScript/Tieba/Tieba_remove_ads.js, requires-body=true
